@@ -1,4 +1,4 @@
-ASP.NETCSharpMVC-OptionSelection
+ASP.NET C# MVC - OptionSelection
 ================================
 
 Assignment: Create a web application that allows users (ie. students) to submit their selection of options (ie. specializations), as well as allow an administrator to view all submissions and manage options, users, and roles.

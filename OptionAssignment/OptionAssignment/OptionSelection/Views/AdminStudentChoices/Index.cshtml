@@ -1,0 +1,90 @@
+﻿@model IEnumerable<OptionClassLibrary.Models.Choice>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Student Choice Assignments</h2><br />
+
+@using (Html.BeginForm("Search", "AdminStudentChoices", FormMethod.Post))
+{
+    @Html.DropDownList("DropDown", "Select List")
+    
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Search" class="btn btn-default" />
+        </div>
+    </div>
+    
+    <table class="searchresults">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TermCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Term.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StudentNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstChoice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SecondChoice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ThirdChoice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FourthChoice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Term.TermCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Term.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StudentNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstChoice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SecondChoice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ThirdChoice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FourthChoice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreateDate)
+        </td>
+    </tr>
+    }
+</table>
+}

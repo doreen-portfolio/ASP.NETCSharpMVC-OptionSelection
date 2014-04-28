@@ -1,0 +1,203 @@
+﻿@{
+    ViewBag.Title = "Option Selection Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    //Load dropdownlists for Terms and Options
+    $(document).ready(
+        GetTerms(),
+        GetOptions()
+        )
+
+    //Get all terms
+    function GetTerms() {
+        jQuery.support.cors = true;
+        $.ajax({
+            url: '/api/term',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                CreateTermsDDL(data);
+            },
+            error: function (x, y, z) {
+                alert(x + '\n' + y + '\n' + z);
+            }
+        });
+    }
+
+    //Populate a dropdownlist with all active terms
+    function CreateTermsDDL(terms) {
+        var strResult = "<select id='ddlTermSelect'>";
+        $.each(terms, function (index, term) {
+            if (term.IsActive) {
+                strResult += "<option value='" + term.TermCode + "'>" + term.Description + "</option>";
+            }
+        });
+        strResult += "</select>\n";
+        $("#ddlTerms").html(strResult);
+    }
+
+    //Get all options
+    function GetOptions() {
+        jQuery.support.cors = true;
+        $.ajax({
+            url: '/api/option',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                CreateOptionsDDL(data);
+            },
+            error: function (x, y, z) {
+                alert(x + '\n' + y + '\n' + z);
+            }
+        });
+    }
+    //Populate dropdownlist with active options
+    function CreateOptionsDDL(options) {
+        var strResult;
+        $.each(options, function (index, option) {
+            if (option.IsActive) {
+                strResult += "<option>" + option.Title + "</option>";
+            }
+        });
+        strResult += "</select>\n";
+        $("#ddlOptions1").html("<select id='ddlOptionSelect1'>" + strResult);
+        $("#ddlOptions2").html("<select id='ddlOptionSelect2'>" + strResult);
+        $("#ddlOptions3").html("<select id='ddlOptionSelect3'>" + strResult);
+        $("#ddlOptions4").html("<select id='ddlOptionSelect4'>" + strResult);
+    }
+
+    //Post data from the option selection form
+    function AddChoice() {
+        jQuery.support.cors = true;
+
+        var e = document.getElementById("ddlTermSelect");
+        var strTerm = e.options[e.selectedIndex].value;
+        var e = document.getElementById("ddlOptionSelect1");
+        var strFirstChoice = e.options[e.selectedIndex].text;
+        var e = document.getElementById("ddlOptionSelect2");
+        var strSecondChoice = e.options[e.selectedIndex].text;
+        var e = document.getElementById("ddlOptionSelect3");
+        var strThirdChoice = e.options[e.selectedIndex].text;
+        var e = document.getElementById("ddlOptionSelect4");
+        var strFourthChoice = e.options[e.selectedIndex].text;
+
+        var choice = {
+            StudentNumber: $('#txtaddStudentNumber').val(),
+            FirstName: $('#txtaddFirstName').val(),
+            LastName: $('#txtaddLastName').val(),
+            TermCode: strTerm,
+            FirstChoice: strFirstChoice,
+            SecondChoice: strSecondChoice,
+            ThirdChoice: strThirdChoice,
+            FourthChoice: strFourthChoice
+        };
+
+        $.ajax({
+            url: '/api/choice/',
+            type: 'POST',
+            data: JSON.stringify(choice),
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+            },
+            error: function (x, y, z) {
+            }
+        });
+    }
+
+    
+
+    function IsStudentNumberValid() {
+        var strStudentNumber = $('#txtaddStudentNumber').val();
+        var regex = new RegExp("^A00[0-9]{6}$");
+        if (regex.exec(strStudentNumber)) {
+            return true;
+        }
+        alert("Student Number must follow format A00######")
+        return false;
+    }
+
+    //Check if first name is valid
+    function IsFirstNameValid() {
+        var strFirstName = $('#txtaddFirstName').val();
+        if(strFirstName.length <= 0){
+            alert("First Name is required")
+            return false;
+        }
+        return true;
+    }
+
+    //Check if last name is valid
+    function IsLastNameValid() {
+        var strLastName = $('#txtaddLastName').val();
+        if (strLastName.length <= 0) {
+            alert("Last Name is required")
+            return false;
+        }
+        return true;
+    }
+
+    //Check if all choices are unique
+    function AreChoicesUnique() {
+        var e = document.getElementById("ddlOptionSelect1");
+        var strFirstChoice = e.options[e.selectedIndex].text;
+        var e = document.getElementById("ddlOptionSelect2");
+        var strSecondChoice = e.options[e.selectedIndex].text;
+        var e = document.getElementById("ddlOptionSelect3");
+        var strThirdChoice = e.options[e.selectedIndex].text;
+        var e = document.getElementById("ddlOptionSelect4");
+        var strFourthChoice = e.options[e.selectedIndex].text;
+
+        var myChoices = new Array(strFirstChoice, strSecondChoice, strThirdChoice, strFourthChoice);
+        var sortedArray = myChoices.sort();
+
+        for (var i = 0; i < sortedArray.length - 1; i++) {
+            if (sortedArray[i + 1] === sortedArray[i]) {
+                alert("Your option choices must all be unique");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    //Submit form by checking that all data is valid before POSTing data
+    function SubmitForm() {
+        if (IsStudentNumberValid() && IsFirstNameValid() && IsLastNameValid() && AreChoicesUnique()) {
+            AddChoice();
+            ClearForm();
+        }
+    }
+
+    //Clears all fields and resets all dropdownlists
+    function ClearForm() {
+        document.getElementById("txtaddStudentNumber").value = '';
+        document.getElementById("txtaddFirstName").value = '';
+        document.getElementById("txtaddLastName").value = '';
+        document.getElementById('ddlOptionSelect1').selectedIndex = 0;
+        document.getElementById('ddlOptionSelect2').selectedIndex = 0;
+        document.getElementById('ddlOptionSelect3').selectedIndex = 0;
+        document.getElementById('ddlOptionSelect4').selectedIndex = 0;
+    }
+</script>
+
+<section class="featured">
+    <div class="content-wrapper">
+        <hgroup class="title">
+            <h1>@ViewBag.Title.</h1>
+        </hgroup>
+        <div>
+            <table class="table-condensed">
+                <tr><td>Student Number:</td><td><input type="text" id="txtaddStudentNumber" maxlength="9" /></td></tr>
+                <tr><td>First Name:</td><td><input type="text" id="txtaddFirstName" maxlength="40" /></td></tr>
+                <tr><td>Last Name:</td><td><input type="text" id="txtaddLastName" maxlength="40" /></td></tr>
+                <tr><td>Term Code:</td><td><div id="ddlTerms"></div></td></tr>
+                <tr><td>First Choice:</td><td><div id="ddlOptions1"></div></td></tr>
+                <tr><td>Second Choice:</td><td><div id="ddlOptions2"></div></td></tr>
+                <tr><td>Third Choice:</td><td><div id="ddlOptions3"></div></td></tr>
+                <tr><td>Fourth Choice:</td><td><div id="ddlOptions4"></div></td></tr>
+                <tr><td><button onclick="SubmitForm(); return false;">Submit</button></td></tr>
+            </table>
+        </div>
+    </div>
+</section>

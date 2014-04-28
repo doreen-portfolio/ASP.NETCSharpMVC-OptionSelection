@@ -1,0 +1,4 @@
+C:\Users\Doreen\Documents\BCITCourses\Term4\Intranet-COMP4870\Assignments\Assignment3\OptionAssignmentModifiedDatabase2\OptionAssignment\OptionClassLibrary\bin\Debug\OptionClassLibrary.dll
+C:\Users\Doreen\Documents\BCITCourses\Term4\Intranet-COMP4870\Assignments\Assignment3\OptionAssignmentModifiedDatabase2\OptionAssignment\OptionClassLibrary\bin\Debug\OptionClassLibrary.pdb
+C:\Users\Doreen\Documents\BCITCourses\Term4\Intranet-COMP4870\Assignments\Assignment3\OptionAssignmentModifiedDatabase2\OptionAssignment\OptionClassLibrary\obj\Debug\OptionClassLibrary.dll
+C:\Users\Doreen\Documents\BCITCourses\Term4\Intranet-COMP4870\Assignments\Assignment3\OptionAssignmentModifiedDatabase2\OptionAssignment\OptionClassLibrary\obj\Debug\OptionClassLibrary.pdb

@@ -3,7 +3,7 @@ ASP.NET C# MVC - OptionSelection
 
 Assignment: Create a web application that allows users (ie. students) to submit their selection of options (ie. specializations), as well as allow an administrator to view all submissions and manage options, users, and roles.
 
-Action: Worked in a team of 2 to design and implement the application using ASP.NET C# MVC. We used code first development to create the database. We used a RESTful web API and Ajax functions for generating and submitting the form. The application is responsive, using Twitter Bootstrap.  
+Action: Worked in a team of 2 to design and implement the application using ASP.NET C# MVC. We used code first development to create the database. We used a RESTful web API and Ajax functions that use JSON objects for generating and submitting the form. The application is responsive, using Twitter Bootstrap.  
 
 Result: Received full marks on the assignment.
 
